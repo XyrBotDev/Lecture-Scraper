@@ -21,6 +21,11 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Fix DNS and Network
+      run: |
+        echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+        for i in {1..3}; do sudo apt-get update && break || sleep 5; done
+
     - name: Install Dependencies
       run: |
         pip install playwright yt-dlp requests
@@ -36,4 +41,3 @@ jobs:
       with:
         name: downloaded-lecture
         path: downloaded_lecture.mp4
-        
